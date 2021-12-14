@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CollectToxicWaste.Dominio.Entidades
 {
-    public class Coleta : Transporte
+    public class Coleta 
     {
         [Key]
         public int IdColeta { get; set; }
