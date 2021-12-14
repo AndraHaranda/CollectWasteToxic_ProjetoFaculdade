@@ -29,6 +29,8 @@ namespace CollectToxicWaste.Dados.Configurações
                 .IsRequired();
             builder.Property(f => f.Email)
                 .IsRequired();
+            builder.Property(f => f.DataNascimento)
+                .IsRequired();
             ;
         }
     }

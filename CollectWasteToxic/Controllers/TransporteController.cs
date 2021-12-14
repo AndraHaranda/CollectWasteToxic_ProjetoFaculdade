@@ -13,19 +13,19 @@ namespace CollectToxicWaste.Controllers
 
         public TransporteController() => transporteServico = new TransporteServico();
 
-        [HttpGet("Listar-transporte")]
+        [HttpGet("ListarTodos")]
         public IEnumerable<Transporte> ListarTransportes() => transporteServico.ListarTransporte();
 
-        [HttpGet("Listar-um")]
+        [HttpGet("ListarUm")]
         public Transporte ListarUm(int IdTransporte) => transporteServico.ListarUm(IdTransporte);
 
-        [HttpPost("Salvar")]
-        public NotificationResult Salvar(Transporte entidade) => transporteServico.Salvar(entidade);
+        [HttpPost("Adicionar")]
+        public NotificationResult Adicionar(Transporte entidade) => transporteServico.Adicionar(entidade);
 
-        [HttpDelete("Excluir")]
-        public NotificationResult Excluir(int IdTransporte) => transporteServico.Excluir(IdTransporte);
+        [HttpDelete("Remover")]
+        public NotificationResult Remover(int IdTransporte) => transporteServico.Remover(IdTransporte);
 
-        [HttpPut("atualizar")]
+        [HttpPut("Atualizar")]
         public NotificationResult Atualizar(Transporte entidade) => transporteServico.Atualizar(entidade);
     }
 

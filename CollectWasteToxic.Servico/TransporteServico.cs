@@ -16,8 +16,43 @@ namespace CollectToxicWaste.Servico
         {
             _transporteRepositorio = new TransporteRepositorio();
         }
+        public NotificationResult Atualizar(Transporte entidade)
+        {
+            var notificationResult = new NotificationResult();
 
-        public NotificationResult Salvar(Transporte entidade)
+            try
+            {
+                if (string.IsNullOrEmpty(entidade.Placa))
+                    notificationResult.Add(new NotificationError("Placa invalida", NotificationErrorType.USER));
+
+                if (string.IsNullOrEmpty(entidade.CategoriaCNH))
+                    notificationResult.Add(new NotificationError("CNH está inválido", NotificationErrorType.USER));
+
+                if (string.IsNullOrEmpty(entidade.Motorista))
+                    notificationResult.Add(new NotificationError("Nome completo invalido", NotificationErrorType.USER));
+
+                if (string.IsNullOrEmpty(entidade.Empresa))
+                    notificationResult.Add(new NotificationError("Empresa invalida", NotificationErrorType.USER));
+
+                if (string.IsNullOrEmpty(entidade.TipoVeiculo))
+                    notificationResult.Add(new NotificationError("Veiculo invalida", NotificationErrorType.USER));
+
+
+                if (notificationResult.IsValid)
+                {
+                    _transporteRepositorio.Atualizar(entidade);
+                    notificationResult.Add("Transporte atualizado com sucesso.");
+                }
+
+                return notificationResult;
+            }
+            catch (Exception ex)
+            {
+                return notificationResult.Add(new NotificationError(ex.Message));
+            }
+        }
+
+        public NotificationResult Adicionar(Transporte entidade)
         {
             var notificationResult = new NotificationResult();
 
@@ -25,16 +60,19 @@ namespace CollectToxicWaste.Servico
             {
 
                 if (string.IsNullOrEmpty(entidade.Placa))
-                    notificationResult.Add(new NotificationError("Telefone Inválido", NotificationErrorType.USER));
+                    notificationResult.Add(new NotificationError("Placa invalida", NotificationErrorType.USER));
 
                 if (string.IsNullOrEmpty(entidade.CategoriaCNH))
-                    notificationResult.Add(new NotificationError("Nome Inválido", NotificationErrorType.USER));
+                    notificationResult.Add(new NotificationError("CNH está inválido", NotificationErrorType.USER));
 
-                if (string.IsNullOrEmpty(entidade.Placa))
-                    notificationResult.Add(new NotificationError("CPF Inválido", NotificationErrorType.USER));
+                if (string.IsNullOrEmpty(entidade.Motorista))
+                    notificationResult.Add(new NotificationError("Nome completo invalido", NotificationErrorType.USER));
 
                 if (string.IsNullOrEmpty(entidade.Empresa))
-                    notificationResult.Add(new NotificationError("URL de Imagem Inválida!", NotificationErrorType.USER));
+                    notificationResult.Add(new NotificationError("Empresa invalida", NotificationErrorType.USER));
+
+                if (string.IsNullOrEmpty(entidade.TipoVeiculo))
+                    notificationResult.Add(new NotificationError("Veiculo invalida", NotificationErrorType.USER));
 
 
                 if (notificationResult.IsValid)
@@ -55,8 +93,7 @@ namespace CollectToxicWaste.Servico
         }
         public Transporte ListarUm(int IdTransporte) => _transporteRepositorio.ListarUm(IdTransporte);
 
-
-        public NotificationResult Excluir(int IdTransporte)
+        public NotificationResult Remover(int IdTransporte)
         {
             var notificationResult = new NotificationResult();
 
@@ -90,42 +127,8 @@ namespace CollectToxicWaste.Servico
             return _transporteRepositorio.ListarTransporte();
         }
 
-        public NotificationResult Atualizar(Transporte entidade)
-        {
-            var notificationResult = new NotificationResult();
 
-            try
-            {
-                if (entidade.IdTransporte <= 0)
-                    return notificationResult.Add(new NotificationError("Código do Cliente Inválido!"));
-
-                if (string.IsNullOrEmpty(entidade.Placa))
-                    notificationResult.Add(new NotificationError("Telefone Inválido", NotificationErrorType.USER));
-
-                if (string.IsNullOrEmpty(entidade.CategoriaCNH))
-                    notificationResult.Add(new NotificationError("Nome Inválido", NotificationErrorType.USER));
-
-                if (string.IsNullOrEmpty(entidade.Placa))
-                    notificationResult.Add(new NotificationError("CPF Inválido", NotificationErrorType.USER));
-
-                if (string.IsNullOrEmpty(entidade.Empresa))
-                    notificationResult.Add(new NotificationError("URL de Imagem Inválida!", NotificationErrorType.USER));
-
-               
-
-                if (notificationResult.IsValid)
-                {
-                    _transporteRepositorio.Atualizar(entidade);
-                    notificationResult.Add("Transporte atualizado com sucesso.");
-                }
-
-                return notificationResult;
-            }
-            catch (Exception ex)
-            {
-                return notificationResult.Add(new NotificationError(ex.Message));
-            }
-        }
     }
+
 
 }

@@ -17,13 +17,13 @@ namespace CollectToxicWaste.Servico
             _coletaRepositorio = new ColetaRepositorio();
         }
 
-        public NotificationResult Salvar(Coleta entidade)
+        public NotificationResult Adicionar(Coleta entidade)
         {
             var notificationResult = new NotificationResult();
 
             try
             {
-               
+
                 if (string.IsNullOrEmpty(entidade.Localizacao))
                     notificationResult.Add(new NotificationError("Não é possivel encontrar localização ", NotificationErrorType.USER));
 
@@ -60,7 +60,7 @@ namespace CollectToxicWaste.Servico
         public Coleta ListarUm(int IdColeta) => _coletaRepositorio.ListarUm(IdColeta);
 
 
-        public NotificationResult Excluir(int IdColeta)
+        public NotificationResult Remover(int IdColeta)
         {
             var notificationResult = new NotificationResult();
 
@@ -93,41 +93,7 @@ namespace CollectToxicWaste.Servico
             return _coletaRepositorio.ListarColeta();
         }
 
-        public NotificationResult Atualizar(Coleta entidade)
-        {
-            var notificationResult = new NotificationResult();
 
-            try
-            {
-                if (entidade.IdColeta <= 0)
-                    return notificationResult.Add(new NotificationError("Código da coleta inválido!"));
-
-                if (string.IsNullOrEmpty(entidade.Localizacao))
-                    notificationResult.Add(new NotificationError("Localização inválida", NotificationErrorType.USER));
-
-                if (string.IsNullOrEmpty(entidade.Endereco))
-                    notificationResult.Add(new NotificationError("CEP inválido", NotificationErrorType.USER));
-
-                if (string.IsNullOrEmpty(entidade.Referencia))
-                    notificationResult.Add(new NotificationError("É necessario informar a referencia", NotificationErrorType.USER));
-
-                if (string.IsNullOrEmpty(entidade.Imagem))
-                    notificationResult.Add(new NotificationError("URL de Imagem Inválida", NotificationErrorType.USER));
-
-
-                if (notificationResult.IsValid)
-                {
-                    _coletaRepositorio.Atualizar(entidade);
-                    notificationResult.Add("Coleta atualizado com sucesso.");
-                }
-
-                return notificationResult;
-            }
-            catch (Exception ex)
-            {
-                return notificationResult.Add(new NotificationError(ex.Message));
-            }
-        }
     }
 
 }

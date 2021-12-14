@@ -17,7 +17,7 @@ namespace CollectToxicWaste.Servico
             _rotaRepositorio = new RotaRepositorio();
         }
 
-        public NotificationResult Salvar(Rota entidade)
+        public NotificationResult Adicionar(Rota entidade)
         {
             var notificationResult = new NotificationResult();
 
@@ -53,42 +53,7 @@ namespace CollectToxicWaste.Servico
                 return notificationResult.Add(new NotificationError(ex.Message));
             }
         }
-        public Rota ListarUm(int IdRota) => _rotaRepositorio.ListarUm(IdRota);
-
-
-        public NotificationResult Excluir(int IdRota)
-        {
-            var notificationResult = new NotificationResult();
-
-            try
-            {
-                if (IdRota == 0)
-                    return notificationResult.Add(new NotificationError("Código da Rota Inválida!"));
-
-                Rota entidade = ListarUm(IdRota);
-
-                if (entidade == null)
-                    return notificationResult.Add(new NotificationError("Rota não Encontrada!"));
-
-                if (notificationResult.IsValid)
-                {
-                    _rotaRepositorio.Remover(entidade);
-                    notificationResult.Add("Rota removido com sucesso.");
-                }
-
-                return notificationResult;
-            }
-            catch (Exception ex)
-            {
-                return notificationResult.Add(new NotificationError(ex.Message));
-            }
-        }
-
-        public IEnumerable<Rota> ListarRota()
-        {
-            return _rotaRepositorio.ListarRota();
-        }
-
+        
         public NotificationResult Atualizar(Rota entidade)
         {
             var notificationResult = new NotificationResult();
@@ -123,6 +88,42 @@ namespace CollectToxicWaste.Servico
                 return notificationResult.Add(new NotificationError(ex.Message));
             }
         }
+
+        public Rota ListarUm(int IdRota) => _rotaRepositorio.ListarUm(IdRota);
+
+        public NotificationResult Remover(int IdRota)
+        {
+            var notificationResult = new NotificationResult();
+
+            try
+            {
+                if (IdRota == 0)
+                    return notificationResult.Add(new NotificationError("Código da Rota Inválida!"));
+
+                Rota entidade = ListarUm(IdRota);
+
+                if (entidade == null)
+                    return notificationResult.Add(new NotificationError("Rota não Encontrada!"));
+
+                if (notificationResult.IsValid)
+                {
+                    _rotaRepositorio.Remover(entidade);
+                    notificationResult.Add("Rota removida com sucesso.");
+                }
+
+                return notificationResult;
+            }
+            catch (Exception ex)
+            {
+                return notificationResult.Add(new NotificationError(ex.Message));
+            }
+        }
+
+        public IEnumerable<Rota> ListarRota()
+        {
+            return _rotaRepositorio.ListarRota();
+        }
+
     }
 
 }

@@ -16,7 +16,48 @@ namespace CollectToxicWaste.Servico
             _usuarioRepositorio = new UsuarioRepositorio();
         }
 
-        public NotificationResult Salvar(Usuario entidade)
+        public NotificationResult Atualizar(Usuario entidade)
+        {
+            var notificationResult = new NotificationResult();
+
+            try
+            {
+                if (entidade.IdUsuario <= 0)
+                    return notificationResult.Add(new NotificationError("Código do Usuario Inválido!"));
+
+                if (string.IsNullOrEmpty(entidade.Nome))
+                    notificationResult.Add(new NotificationError("Nome Inválido", NotificationErrorType.USER));
+
+                if (ValidarCPF.ValidaCPF(entidade.CPF) == false)
+                    notificationResult.Add(new NotificationError("CPF Inválido", NotificationErrorType.USER));
+
+                if (string.IsNullOrEmpty(entidade.CNPJ))
+                    notificationResult.Add(new NotificationError("URL de Imagem Inválida!", NotificationErrorType.USER));
+
+                if (string.IsNullOrEmpty(entidade.RG))
+                    notificationResult.Add(new NotificationError("RG Inválido", NotificationErrorType.USER));
+
+                if (ValidarEmail.ValidaEmail(entidade.Email) == false)
+                    notificationResult.Add(new NotificationError("E-mail Inválido!", NotificationErrorType.USER));
+
+                if (entidade.DataNascimento < DateTime.Today)
+                    notificationResult.Add(new NotificationError("Data Inválida!", NotificationErrorType.USER));
+
+                if (notificationResult.IsValid)
+                {
+                    _usuarioRepositorio.Atualizar(entidade);
+                    notificationResult.Add("Cliente Atualizado com sucesso.");
+                }
+
+                return notificationResult;
+            }
+            catch (Exception ex)
+            {
+                return notificationResult.Add(new NotificationError(ex.Message));
+            }
+        }
+
+        public NotificationResult Adicionar(Usuario entidade)
         {
             var notificationResult = new NotificationResult();
 
@@ -60,7 +101,7 @@ namespace CollectToxicWaste.Servico
         public Usuario ListarUm(int IdUsuario) => _usuarioRepositorio.ListarUm(IdUsuario);
 
 
-        public NotificationResult Excluir(int IdUsuario)
+        public NotificationResult Remover(int IdUsuario)
         {
             var notificationResult = new NotificationResult();
 
@@ -91,47 +132,6 @@ namespace CollectToxicWaste.Servico
         public IEnumerable<Usuario> ListarUsuarios()
         {
             return _usuarioRepositorio.ListarUsuarios();
-        }
-
-        public NotificationResult Atualizar(Usuario entidade)
-        {
-            var notificationResult = new NotificationResult();
-
-            try
-            {
-                if (entidade.IdUsuario <= 0)
-                    return notificationResult.Add(new NotificationError("Código do Usuario Inválido!"));
-
-                if (string.IsNullOrEmpty(entidade.Nome))
-                    notificationResult.Add(new NotificationError("Nome Inválido", NotificationErrorType.USER));
-
-                if (ValidarCPF.ValidaCPF(entidade.CPF) == false)
-                    notificationResult.Add(new NotificationError("CPF Inválido", NotificationErrorType.USER));
-
-                if (string.IsNullOrEmpty(entidade.CNPJ))
-                    notificationResult.Add(new NotificationError("URL de Imagem Inválida!", NotificationErrorType.USER));
-
-                if (string.IsNullOrEmpty(entidade.RG))
-                    notificationResult.Add(new NotificationError("RG Inválido", NotificationErrorType.USER));
-
-                if (ValidarEmail.ValidaEmail(entidade.Email) == false)
-                    notificationResult.Add(new NotificationError("E-mail Inválido!", NotificationErrorType.USER));
-
-                if (entidade.DataNascimento < DateTime.Today)
-                    notificationResult.Add(new NotificationError("Data Inválida!", NotificationErrorType.USER));
-
-                if (notificationResult.IsValid)
-                {
-                    _usuarioRepositorio.Atualizar(entidade);
-                    notificationResult.Add("Cliente Atualizado com sucesso.");
-                }
-
-                return notificationResult;
-            }
-            catch (Exception ex)
-            {
-                return notificationResult.Add(new NotificationError(ex.Message));
-            }
         }
     }
 }

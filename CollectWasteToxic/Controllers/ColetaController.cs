@@ -13,19 +13,19 @@ namespace CollectToxicWaste.Controllers
 
         public ColetaController() => coletaServico = new ColetaServico();
 
-        [HttpGet("listar-coleta")]
+        [HttpGet("ListarTodos")]
         public IEnumerable<Coleta> ListarColeta() => coletaServico.ListarColeta();
 
-        [HttpGet("listar-um")]
+        [HttpGet("ListarUm")]
         public Coleta ListarUm(int IdColeta) => coletaServico.ListarUm(IdColeta);
 
-        [HttpPost("salvar")]
-        public NotificationResult Salvar(Coleta entidade) => coletaServico.Salvar(entidade);
+        [HttpPost("Adicionar")]
+        public NotificationResult Adicionar(Coleta entidade) => coletaServico.Adicionar(entidade);
 
-        [HttpDelete("excluir")]
-        public NotificationResult Excluir(int CodColeta) => coletaServico.Excluir(CodColeta);
+        [HttpDelete("Remover")]
+        public NotificationResult Remover(int IdColeta) => coletaServico.Remover(IdColeta);
 
-        [HttpPut("atualizar")]
+        [HttpPut("Atualizar")]
         public NotificationResult Atualizar(Coleta entidade) => coletaServico.Atualizar(entidade);
     }
 }

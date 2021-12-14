@@ -14,19 +14,19 @@ namespace CollectToxicWaste.Controllers
 
         public RotaController() => rotaServico = new RotaServico();
 
-        [HttpGet("listar-Rota")]
+        [HttpGet("ListarTodos")]
         public IEnumerable<Rota> ListarRotas() => rotaServico.ListarRota();
 
-        [HttpGet("listar-um")]
+        [HttpGet("ListarUm")]
         public Rota ListarUm(int IdRota) => rotaServico.ListarUm(IdRota);
 
-        [HttpPost("salvar")]
-        public NotificationResult Salvar(Rota entidade) => rotaServico.Salvar(entidade);
+        [HttpPost("Adicionar")]
+        public NotificationResult Adicionar(Rota entidade) => rotaServico.Adicionar(entidade);
 
-        [HttpDelete("excluir")]
-        public NotificationResult Excluir(int IdRota) => rotaServico.Excluir(IdRota);
+        [HttpDelete("Remover")]
+        public NotificationResult Remover(int IdRota) => rotaServico.Remover(IdRota);
 
-        [HttpPut("atualizar")]
+        [HttpPut("Atualizar")]
         public NotificationResult Atualizar(Rota entidade) => rotaServico.Atualizar(entidade);
     }
 

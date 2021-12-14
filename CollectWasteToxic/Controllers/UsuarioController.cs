@@ -17,17 +17,17 @@ namespace CollectToxicWaste.Controllers
 
         public UsuarioController() => usuarioServico = new UsuarioServico();
 
-        [HttpGet("Listar-Usuarios")]
+        [HttpGet("ListarTodos")]
         public IEnumerable<Usuario> ListarUsuarios() => usuarioServico.ListarUsuarios();
 
-        [HttpGet("Listar-um")]
+        [HttpGet("ListarUm")]
         public Usuario ListarUm(int IdUsuario) => usuarioServico.ListarUm(IdUsuario);
 
-        [HttpPost("Salvar")]
-        public NotificationResult Salvar(Usuario entidade) => usuarioServico.Salvar(entidade);
+        [HttpPost("Adicionar")]
+        public NotificationResult Adicionar(Usuario entidade) => usuarioServico.Adicionar(entidade);
 
-        [HttpDelete("Excluir")]
-        public NotificationResult Excluir(int CodUsuario) => usuarioServico.Excluir(CodUsuario);
+        [HttpDelete("Remover")]
+        public NotificationResult Remover(int IdUsuario) => usuarioServico.Remover(IdUsuario);
 
         [HttpPut("Atualizar")]
         public NotificationResult Atualizar(Usuario entidade) => usuarioServico.Atualizar(entidade);
